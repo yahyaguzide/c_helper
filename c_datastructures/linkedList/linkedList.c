@@ -24,7 +24,10 @@ void List_Init( list *l ){
     l->tail = NULL;
     l->length = 0;
 
-    l->Free = NULL;
+	// NOTE: Default Free form listElement
+    l->FreeElem = Element_Free;
+	// NOTE: Default Clone from listElement
+	l->CloneElem = Element_Clone;
 }
 
 list* List_Create(){
@@ -80,57 +83,48 @@ element* List_GetElem( list *l, int index ){
 	return elem;
 }
 
-static void* List_InList( list *l, element *sElem ){
-	if( !l || !sElem )
-		return NULL;
-
-	if( l->head == sElem )
-		return (void*)l;
-
-	element *elem = l->head;
-	for(; elem->next != NULL; elem= elem->next )
-		if( elem->next == sElem )
-			return (void*)elem;
-	return NULL;
-}
-
-void List_Clone( list *l ){
+/*
+list* List_Clone( list *l ){
 	if( !l )
 		return;
 	//TODO: write List_Clone
 	//and think if i realy need it
 }
-
-void List_Delete( list *l, element *dElem ){
-	void *preElem;
-	element *tmp;
-	if( !l || !dElem || !(preElem= List_InList( l, dElem )) )
+*/
+void List_Delete( list *l, int i ){
+	if( !l || i >= l->length )
 		return;
 
+	element *preElem, *tmp;
+
+	preElem = l->head;
+	for(; i > 0; i--, preElem = preElem->next );
+
 	// The given Element is the Head
-	if( (void*)l == preElem ){
+	if( (void*)l->head == preElem ){
 		tmp = l->head;
+
+		// only one Element was in the list
+		if( tmp == l->tail )
+			l->tail = NULL;
+
 		l->head = tmp->next;
 	}else{ // Element is in the List but not The Head
 		tmp = ((element*)preElem)->next;
 		((element*)preElem)->next = tmp->next;
+		
+		// The given Element is the Tail
+		if( tmp == l->tail )
+			l->tail = preElem;
 	}
 	l->length--;
 
-	// If a Free function was given use it else use
-	// the Free function of every Element
-	if( l->Free )
-		l->Free(&tmp);
-	else
-		tmp->Free(&tmp);
+	l->FreeElem(tmp);
 }
 
-
-// Make List Element polymorphible?! let user give a Free Function!!
 void List_Free( list **l ){
 	while( (*l)->length > 0 ){
-		(*l)->length -= 1;
-		List_Delete( *l, List_GetElem( *l, (*l)->length ) );
+		List_Delete( *l, (*l)->length-1 );
 	}
 	
 	free(*l);

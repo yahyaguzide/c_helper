@@ -4,7 +4,6 @@
 typedef struct _element{
 	void *data;
 	struct _element *next;
-	void (*Free)( struct _element **elem );
 }element;
 
 void Element_Init(element*);
@@ -13,8 +12,15 @@ element* Element_Create();
 void* Element_GetData(element*);
 
 void Element_Update(element*, void* );
+// NOTE: this is the default Clone function for
+// Elements.
+// it only will make a shallow copy of it!
 element* Element_Clone(element*);
 
-void Element_Free(element**);
+// NOTE: this is a default free function for
+// Elements.
+// As long no Free function in List is given 
+// this will be used!
+void Element_Free(element*);
 
 #endif
