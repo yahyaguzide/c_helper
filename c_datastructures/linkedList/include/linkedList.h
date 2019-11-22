@@ -20,7 +20,7 @@ typedef struct _list{
 	//
 	// Free of list overrides default Free of listElement
 	void (*FreeElem)(element*);
-	element* (*CloneElem)(element*);
+	element* (*CopyElem)(element*);
 } list;
 
 
@@ -31,6 +31,7 @@ void List_AddTail(list*, void*);
 int List_GetLength(list*);
 element* List_GetElem(list*, int);
 
+// TODO: write a copy function instead of a Clone
 //list* List_Clone(list*);
 void List_Delete(list*, int);
 void List_Free(list**);

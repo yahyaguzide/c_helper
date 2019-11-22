@@ -26,8 +26,8 @@ void List_Init( list *l ){
 
 	// NOTE: Default Free form listElement
     l->FreeElem = Element_Free;
-	// NOTE: Default Clone from listElement
-	l->CloneElem = Element_Clone;
+	// NOTE: Default Copy from listElement
+	l->CopyElem = Element_ShallowCopy;
 }
 
 list* List_Create(){
@@ -130,4 +130,3 @@ void List_Free( list **l ){
 	free(*l);
 	*l = NULL;
 }
-

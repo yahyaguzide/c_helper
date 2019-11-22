@@ -36,23 +36,27 @@ void Element_Update( element *elem, void *data ){
 	if( !elem && !data )
 		return;
 
+    // TODO: find a clean way of updating data  maybe with memcpy
+    // NOTE: if memcpy is going to be used be warry, could lead to random behavior
 	if( elem->data )
-		free(elem->data);
+//		free(elem->data);
 
 	elem->data = data;
 }
 
-element* Element_Clone( element *elem ){
-	element *clone = (element*)malloc(sizeof(element));
+element* Element_ShallowCopy( element *elem ){
+	element *cp = (element*)malloc(sizeof(element));
 	
-	clone->data = elem->data;
-	clone->next = elem->next;
-	return clone;
+	cp->data = elem->data;
+	cp->next = elem->next;
+	return cp;
 }
 
+/* Is not used anymore List will provide a Free function for all elements
 void Element_Free( element *elem ){
 	if( !elem )
 		return;
 
 	free(elem);
 }
+*/
