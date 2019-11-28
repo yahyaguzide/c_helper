@@ -22,13 +22,11 @@ void SString_Init(sString* );
 sString *SString_Create();
 
 // NOTE: do not give a char* which points to a non
-// terminated Adress
+// terminated Adress(Without a ASCII-NULL)
 //
-// Second arg is needed to ensure more safety, it will wait for 
-// a character that will describe how long the input will be 
-// 50   s
-// 500  m
-// >500 l
+// Second arg is the length, to give more safety to the user
+// n = 0 is consideret as a String with a not fixed size
+// NOTE: please be cautios if you decide to use 0 it can end in a infinit Loop
 sString *SString_CreateSet(char*, int);
 void SString_Set(sString*, char*, int);
 
