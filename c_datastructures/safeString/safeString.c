@@ -24,7 +24,7 @@ sString *SString_Create(){
     return ss;
 }
 
-sString *SString_CreateSet( char *c ){
+sString *SString_CreateSet( char *c, int size ){
 	if( !c )
 		return NULL;
 
@@ -32,7 +32,9 @@ sString *SString_CreateSet( char *c ){
     SString_Init(ss);
 	
 	ss->head = c;
-	// will end up in a infinit Loop
+
+    if( size )
+	// type l will end up in a infinit Loop
 	// char* that point to a adress which is not Terminated
 	// with the ACII-NUll
 	for(; *c != '\0'; c+= 1 );
@@ -40,7 +42,7 @@ sString *SString_CreateSet( char *c ){
 	return ss;
 }
 
-void SString_Set( char *c ){
+void SString_Set( sString* ss, char *c, int size ){
 	ss->head = c;
 	// will end up in a infinit Loop
 	// char* that point to a adress which is not Terminated

@@ -23,9 +23,14 @@ sString *SString_Create();
 
 // NOTE: do not give a char* which points to a non
 // terminated Adress
-sString *SString_CreateSet(char*);
-
-void SString_Set(sString*, char*);
+//
+// Second arg is needed to ensure more safety, it will wait for 
+// a character that will describe how long the input will be 
+// 50   s
+// 500  m
+// >500 l
+sString *SString_CreateSet(char*, int);
+void SString_Set(sString*, char*, int);
 
 void SString_Free(sString*);
 
