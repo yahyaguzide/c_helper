@@ -122,11 +122,10 @@ void List_Delete( list *l, int i ){
 	l->FreeElem(tmp);
 }
 
-void List_Free( list **l ){
-	while( (*l)->length > 0 ){
-		List_Delete( *l, (*l)->length-1 );
+void List_Free( list *l ){
+	while( l->length > 0 ){
+		List_Delete( l, l->length-1 );
 	}
 	
-	free(*l);
-	*l = NULL;
+	free(l);
 }

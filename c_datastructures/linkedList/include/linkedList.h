@@ -34,6 +34,6 @@ element* List_GetElem(list*, int);
 // TODO: write a copy function instead of a Clone
 //list* List_Clone(list*);
 void List_Delete(list*, int);
-void List_Free(list**);
+void List_Free(list*);
 
 #endif
